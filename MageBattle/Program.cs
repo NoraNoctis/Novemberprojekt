@@ -7,12 +7,12 @@ namespace MageBattle
         static void Main(string[] args)
         {
            bool play = false;
-           string A = "Teine "; //(fun note: all names comes from gaelich comes from their respective elements)
-           string B = "Usige ";
-           string C = "Ùir ";
-           string D = "Sgàil ";
-           string E = "Gaoth ";
-           string F = "Leus ";
+           string A = "Teine"; //(fun note: all names comes from gaelich comes from their respective elements)
+           string B = "Usige";//(which are;fire, water, earth, shadow, air, light)
+           string C = "Ùir";
+           string D = "Sgàil";
+           string E = "Gaoth";
+           string F = "Leus";
            string[] Roster = { A, B, C, D, E, F };
            string []YesNo ={"Yes","No"};
            string[]Actions = {"Attack", "Guard", "Channel your spell"};
@@ -56,37 +56,35 @@ namespace MageBattle
 
                 Mage player1 = new Mage("",0,0,0,0,"","");
                  if (p1choise== A)
-            {
-                player1 = new Mage(A,5,10,0,3," is scurged by blazing flames","fire");
-                
+                {
+                    player1 = new Mage(A,5,10,0,3," is scurged by blazing flames","fire");
 
-            }
-            if (p1choise== B)
-            {
-                 player1 = new Mage(B,1,10,4,3," is drenched by a roaring tidal wave","water");
+                }
+                if (p1choise== B)
+                {
+                     player1 = new Mage(B,1,10,4,3," is drenched by a roaring tidal wave","water");
                 
-            }
-            if (p1choise== C)
-            {
-                player1 = new Mage(C,3,8,2,5," is hit by rushing boulders","rock");
-               
-            }
-            if (p1choise== D)
-            {
-                player1 = new Mage(D,3,12,2,1," is engulfed in a cloud of shadows","shadow");
-                
-            }
-            if (p1choise== E)
-            {
-                player1 = new Mage(E,3,12,0,3," is hurled around by dancing winds","wind");
-                
-            }
-            if (p1choise== F)
-            {
-                player1 = new Mage(F,5,10,2,1," is shreded by sharp rays of light","light");
-               
+                }
+                if (p1choise== C)
+                {
+                    player1 = new Mage(C,3,8,2,5," is hit by rushing boulders","rock");
 
-            }
+                }
+                if (p1choise== D)
+                {
+                    player1 = new Mage(D,3,12,2,1," is engulfed in a cloud of shadows","shadow");
+
+                }
+                if (p1choise== E)
+                {
+                    player1 = new Mage(E,3,12,0,3," is hurled around by dancing winds","wind");
+
+                }
+                if (p1choise== F)
+                {
+                    player1 = new Mage(F,5,10,2,1," is shreded by sharp rays of light","light");
+
+                }
                 
                 int valP2;
                 if (singleMode==false)

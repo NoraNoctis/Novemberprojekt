@@ -6,7 +6,7 @@ namespace MageBattle
     {
         static Random Gen = new Random();
         private string name;
-        public Stat<int> hp;
+        private Stat<int> hp;
         private Stat<int> m_dodge;
         private Stat<int> m_damage; //garanteed damage on top of random
         private Stat<int> m_focus; //likelyness to hit
@@ -14,15 +14,10 @@ namespace MageBattle
         private string m_frase;
         private string elementType;
 
-        private string A = "Teine "; //(coresponding elements; fire, water, earth, shadow, air, light)
-        private string B = "Usige ";
-        private string C = "Ùir ";
-        private string D = "Sgàil ";
-        private string E = "Gaoth ";
-        private string F = "Leus ";
         
-        public Mage(string batteler, int damage, int dodge, int focus, int defense, string frase,string element ) // ta resultat in val, asign stats
-        { 
+        public Mage(string batteler, int damage, int dodge, int focus, int defense, string frase,string element)
+        { //tar in val av karaktär med stats, vilka tillhör den instansen. 
+          //om har tid gör om karaktärer till 6 separata subklasser av Mage användning av arv
            name = batteler;
            m_damage.value = damage;
            m_defense.value = defense;
@@ -32,7 +27,7 @@ namespace MageBattle
            elementType = element;
 
         }
-         public void Attack(Mage target) // random 20 + focus vs dodge,  on hit: random 5 + random 5 + damage vs defense
+         public void Attack(Mage target) // to hit d20  + attackers focus vs oponent dodge,  on hit: d5 + d5 + damage vs defense
          {
            int attack = Gen.Next(20) + m_focus.value + m_focus.modifier;
            if(attack >= target.m_dodge.value+target.m_dodge.modifier)
