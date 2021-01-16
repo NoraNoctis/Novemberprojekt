@@ -14,7 +14,8 @@ namespace MageBattle
            string E = "Gaoth ";
            string F = "Leus ";
            string[] Roster = { A, B, C, D, E, F };
-           string []YesNo ={"Yes","No"}
+           string []YesNo ={"Yes","No"};
+           string[]Actions = {"Attack", "Guard", "Channel your spell"};
         
          
            Console.WriteLine("To play press: p");
@@ -30,13 +31,14 @@ namespace MageBattle
                Random generator = new Random(); // används senare till att styra p2 
                 
                 bool singleMode = false;
-
+                bool matchActive = true;
+                
                 Console.WriteLine("Welcome to the Mage Arena");
                 Console.WriteLine("Are you alone are with a friend?");
                 
-                int valSingle = ChoiseMenu("Switch to single player mode?", new string[] {  });
+                int valSingle = ChoiseMenu("Switch to single player mode?", new string[] {"Yes","No"});
 
-                string single = (Roster[valSingle]);
+                string single = (YesNo[valSingle]);
                 
                 if (single=="Yes")
                 {
@@ -46,31 +48,127 @@ namespace MageBattle
                 
                 Console.WriteLine("Player1 select your duelist");
                 
-                int valP1 = ChoiseMenu("Your choises are:", new string[] {  });
+                int valP1 = ChoiseMenu("Your choises are:", new string[] {A, B, C, D, E, F});
 
-                string p1choise = (Roster[valP1]);
-                Mage player1 = new Mage(p1choise);
+                string p1choise = (Roster[valP1]);// väljer karaktär att spela som från namn i roster, detta avgör sedan stats
+
+                Mage player1 = new Mage("",0,0,0,0,"","");
+                 if (p1choise== A)
+            {
+                player1 = new Mage(A,5,10,0,3," is scurged by blazing flames","fire");
                 
+
+            }
+            if (p1choise== B)
+            {
+                 player1 = new Mage(B,1,10,4,3," is drenched by a roaring tidal wave","water");
+                
+            }
+            if (p1choise== C)
+            {
+                player1 = new Mage(C,3,8,2,5," is hit by rushing boulders","rock");
+               
+            }
+            if (p1choise== D)
+            {
+                player1 = new Mage(D,3,12,2,1," is engulfed in a cloud of shadows","shadow");
+                
+            }
+            if (p1choise== E)
+            {
+                player1 = new Mage(E,3,12,0,3," is hurled around by dancing winds","wind");
+                
+            }
+            if (p1choise== F)
+            {
+                player1 = new Mage(F,5,10,2,1," is shreded by sharp rays of light","light");
+               
+
+            }
                 
                 int valP2;
                 if (singleMode==false)
                 {
                     Console.WriteLine("Player2 select your duelist");
                 
-                    valP2 = ChoiseMenu("Your choises are:", new string[] {  });
+                    valP2 = ChoiseMenu("Your choises are:", new string[] {A, B, C, D, E, F});
 
 
                 }
                 else
                 {
-                    valP2 = generator.Next(6);
+                    valP2 = generator.Next(5);
                 }
                 string p2choise = (Roster[valP2]);
-                Mage player2 = new Mage(p2choise);
+                Mage player2 =new Mage("",0,0,0,0,"","");
+                if (p2choise== A)
+            {
+                player2 = new Mage(A,5,10,0,3," is scurged by blazing flames","fire");
+                
+
+            }
+            if (p2choise== B)
+            {
+                 player2 = new Mage(B,1,10,4,3," is drenched by a roaring tidal wave","water");
+                
+            }
+            if (p2choise== C)
+            {
+                player2 = new Mage(C,3,8,2,5," is hit by rushing boulders","rock");
+               
+            }
+            if (p2choise== D)
+            {
+                player2 = new Mage(D,3,12,2,1," is engulfed in a cloud of shadows","shadow");
+                
+            }
+            if (p2choise== E)
+            {
+                player2 = new Mage(E,3,12,0,3," is hurled around by dancing winds","wind");
+                
+            }
+            if (p2choise== F)
+            {
+                player2 = new Mage(F,5,10,2,1," is shreded by sharp rays of light","light");
+               
+
+            }
 
                 
                 Console.WriteLine(p1choise + "VS " + p2choise);
                 Console.WriteLine("May the best spellcaster win");
+                while (matchActive== true)
+                {
+                   
+                    int actionChoiseP1;
+                    actionChoiseP1= ChoiseMenu("It is your turn player 1", new string[] {"Attack", "Guard", "Channel your spell"});
+
+                    string p1Action =(Actions[actionChoiseP1]);
+                    if(p1Action=="Attack")
+                    {
+                        Console.WriteLine(p1choise+" Attacks "+p2choise);
+                        player1.Attack(player2);
+
+                    }
+                    
+                    if(p1Action=="Guard")
+                    {
+                        
+                        player1.Defend();
+                        
+                    }
+                    if(p1Action=="Channel your spell")
+                    {
+                        player1.Chanell();
+
+                    }
+                    player1.StatusUpdate();
+                    // player1.status, player2 status
+                    // if player1 flase & player2 true, or p1 f & p2 f = tie
+                    // change while modifier
+
+
+                }
 
            }
         
@@ -79,7 +177,8 @@ namespace MageBattle
 
 
 
-        static int ChoiseMenu(string title, string[] options)
+        static int ChoiseMenu(string title, string[] options) //
+
         {
             bool selectedValue = false;
             int currentIndex = 0;
