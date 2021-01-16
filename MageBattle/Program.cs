@@ -32,6 +32,8 @@ namespace MageBattle
                 
                 bool singleMode = false;
                 bool matchActive = true;
+                bool p1Alive= true;
+                bool p2Alive = true;
                 
                 Console.WriteLine("Welcome to the Mage Arena");
                 Console.WriteLine("Are you alone are with a friend?");
@@ -162,10 +164,57 @@ namespace MageBattle
                         player1.Chanell();
 
                     }
-                    player1.StatusUpdate();
-                    // player1.status, player2 status
-                    // if player1 flase & player2 true, or p1 f & p2 f = tie
-                    // change while modifier
+                    if(p1Action=="Attack")
+                    {
+                        Console.WriteLine(p1choise+" Attacks "+p2choise);
+                        player2.Attack(player1);
+
+                    }
+                    
+                    int actionChoiseP2;
+                    if (singleMode==false)
+                    {
+                       actionChoiseP2= ChoiseMenu("It is your turn player 1", new string[] {"Attack", "Guard", "Channel your spell"}); 
+                    }
+                    else
+                    {
+                        actionChoiseP2 = generator.Next(2);
+                    }
+                    
+
+                    string p2Action =(Actions[actionChoiseP2]);
+                    if(p2Action=="Guard")
+                    {
+                        
+                        player2.Defend();
+                        
+                    }
+                    if(p2Action=="Channel your spell")
+                    {
+                        player2.Chanell();
+
+                    }
+                    
+                    
+
+                    p1Alive= player1.StatusUpdate();
+                    p2Alive= player2.StatusUpdate();
+                    if (p1Alive == false&&p2Alive==false)
+                    {
+                        Console.WriteLine("It is a tie");
+                        matchActive= false;
+                    }
+                    else if(p1Alive == true && p2Alive==false)
+                    {
+                        Console.WriteLine("Congratulations Player 1 "+p1choise+" is the winner");
+                        matchActive = false;
+                    }
+                    else if(p1Alive == false && p2Alive==true)
+                    {
+                        Console.WriteLine("Congratulations Player 2 "+p2choise+" is the winner");
+                        matchActive = false;
+                    }
+                    
 
 
                 }
