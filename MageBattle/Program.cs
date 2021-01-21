@@ -26,17 +26,19 @@ namespace MageBattle
                 play = true;
 
             }
+            Console.ReadLine();
+
            while (play== true)
            {
                Random generator = new Random(); // används senare till att styra p2 
                 
                 bool singleMode = false;
                 bool matchActive = true;
-                bool p1Alive= true;
-                bool p2Alive = true;
+                
                 
                 Console.WriteLine("Welcome to the Mage Arena");
                 Console.WriteLine("Are you alone are with a friend?");
+                Console.ReadLine();
                 
                 int valSingle = ChoiseMenu("Switch to single player mode?", new string[] {"Yes","No"});
 
@@ -48,11 +50,12 @@ namespace MageBattle
                 }
                 
                 
-                Console.WriteLine("Player1 select your duelist");
+                Console.WriteLine("Player1 select your duelist\n");
                 
-                int valP1 = ChoiseMenu("Your choises are:", new string[] {A, B, C, D, E, F});
+                int valP1 = ChoiseMenu("Player1 select your duelist\nYour choises are:", new string[] {A, B, C, D, E, F});
 
                 string p1choise = (Roster[valP1]);// väljer karaktär att spela som från namn i roster, detta avgör sedan stats
+                
 
                 Mage player1 = new Mage("",0,0,0,0,"","");
                  if (p1choise== A)
@@ -86,12 +89,14 @@ namespace MageBattle
 
                 }
                 
+                
                 int valP2;
                 if (singleMode==false)
                 {
                     Console.WriteLine("Player2 select your duelist");
                 
                     valP2 = ChoiseMenu("Your choises are:", new string[] {A, B, C, D, E, F});
+                    Console.ReadLine();
 
 
                 }
@@ -99,51 +104,57 @@ namespace MageBattle
                 {
                     valP2 = generator.Next(5);
                 }
+                
                 string p2choise = (Roster[valP2]);
                 Mage player2 =new Mage("",0,0,0,0,"","");
                 if (p2choise== A)
-            {
-                player2 = new Mage(A,5,10,0,3," is scurged by blazing flames","fire");
-                
+                {
+                    player2 = new Mage(A,5,10,0,3," is scurged by blazing flames","fire");
 
-            }
-            if (p2choise== B)
-            {
-                 player2 = new Mage(B,1,10,4,3," is drenched by a roaring tidal wave","water");
-                
-            }
-            if (p2choise== C)
-            {
-                player2 = new Mage(C,3,8,2,5," is hit by rushing boulders","rock");
-               
-            }
-            if (p2choise== D)
-            {
-                player2 = new Mage(D,3,12,2,1," is engulfed in a cloud of shadows","shadow");
-                
-            }
-            if (p2choise== E)
-            {
-                player2 = new Mage(E,3,12,0,3," is hurled around by dancing winds","wind");
-                
-            }
-            if (p2choise== F)
-            {
-                player2 = new Mage(F,5,10,2,1," is shreded by sharp rays of light","light");
-               
 
-            }
+                }
+                if (p2choise== B)
+                {
+                     player2 = new Mage(B,1,10,4,3," is drenched by a roaring tidal wave","water");
 
-                
+                }
+                if (p2choise== C)
+                {
+                    player2 = new Mage(C,3,8,2,5," is hit by rushing boulders","rock");
+
+                }
+                if (p2choise== D)
+                {
+                    player2 = new Mage(D,3,12,2,1," is engulfed in a cloud of shadows","shadow");
+
+                }
+                if (p2choise== E)
+                {
+                    player2 = new Mage(E,3,12,0,3," is hurled around by dancing winds","wind");
+
+                }
+                if (p2choise== F)
+                {
+                    player2 = new Mage(F,5,10,2,1," is shreded by sharp rays of light","light");
+
+
+                }
+
+                Console.ReadLine();
                 Console.WriteLine(p1choise + "VS " + p2choise);
                 Console.WriteLine("May the best spellcaster win");
                 while (matchActive== true)
                 {
+                    bool p1Alive= true;
+                    bool p2Alive = true;
                    
                     int actionChoiseP1;
                     actionChoiseP1= ChoiseMenu("It is your turn player 1", new string[] {"Attack", "Guard", "Channel your spell"});
 
-                    string p1Action =(Actions[actionChoiseP1]);
+                    string p1Action =Actions[actionChoiseP1];
+                    
+                    Console.ReadLine();
+
                     if(p1Action=="Attack")
                     {
                         Console.WriteLine(p1choise+" Attacks "+p2choise);
@@ -169,10 +180,17 @@ namespace MageBattle
 
                     }
                     
+                   
+                    
+                    p2Alive= player2.StatusUpdate();
+                    matchActive = WinStatus(p1Alive,p2Alive,p1choise,p2choise);
+                   
+                   
                     int actionChoiseP2;
                     if (singleMode==false)
                     {
-                       actionChoiseP2= ChoiseMenu("It is your turn player 1", new string[] {"Attack", "Guard", "Channel your spell"}); 
+                       actionChoiseP2= ChoiseMenu("It is your turn player 2", new string[] {"Attack", "Guard", "Channel your spell"}); 
+                       Console.ReadLine();
                     }
                     else
                     {
@@ -192,28 +210,12 @@ namespace MageBattle
                         player2.Chanell();
 
                     }
+                    Console.ReadLine();
                     
-                    
-
                     p1Alive= player1.StatusUpdate();
-                    p2Alive= player2.StatusUpdate();
-                    if (p1Alive == false&&p2Alive==false)
-                    {
-                        Console.WriteLine("It is a tie");
-                        matchActive= false;
-                    }
-                    else if(p1Alive == true && p2Alive==false)
-                    {
-                        Console.WriteLine("Congratulations Player 1 "+p1choise+" is the winner");
-                        matchActive = false;
-                    }
-                    else if(p1Alive == false && p2Alive==true)
-                    {
-                        Console.WriteLine("Congratulations Player 2 "+p2choise+" is the winner");
-                        matchActive = false;
-                    }
+                  
+                    matchActive = WinStatus(p1Alive,p2Alive,p1choise,p2choise);
                     
-
 
                 }
 
@@ -285,6 +287,31 @@ namespace MageBattle
             return currentIndex;
         }
         
+        static bool WinStatus(bool p1, bool p2,string p1Mage,string p2Mage)
+        {
+           bool check = true;
+            if (p1 == false&&p2==false)
+            {
+                Console.WriteLine("It is a tie");
+                check= false;
+            }
+                   
+            else if(p1 == true && p2==false)
+            {
+                Console.WriteLine("Congratulations Player 1, "+p1Mage+" is the winner");
+                check = false;
+            }
+             else if(p1 == false && p2==true)
+            {
+                Console.WriteLine("Congratulations Player 2, "+p2Mage+" is the winner");
+                check = false;
+            }
+            else 
+            {
+                check = true;
+            }
+           return check;
+        }
 
     }
 }

@@ -6,11 +6,11 @@ namespace MageBattle
     {
         static Random Gen = new Random();
         private string name;
-        private Stat<int> hp;
-        private Stat<int> m_dodge;
-        private Stat<int> m_damage; //garanteed damage on top of random
-        private Stat<int> m_focus; //likelyness to hit
-        private Stat<int> m_defense;
+        private Stat<int> hp= new Stat<int>();
+        private Stat<int> m_dodge =new Stat<int> ();
+        private Stat<int> m_damage = new Stat<int>(); //garanteed damage on top of random
+        private Stat<int> m_focus= new Stat<int>(); //likelyness to hit
+        private Stat<int> m_defense= new Stat<int>();
         private string m_frase;
         private string elementType;
 
@@ -25,12 +25,13 @@ namespace MageBattle
            m_focus.value = focus;
            m_frase= frase;
            elementType = element;
+           hp.value= 50;
 
         }
-         public void Attack(Mage target) // to hit d20  + attackers focus vs oponent dodge,  on hit: d5 + d5 + damage vs defense
+         public void Attack(Mage target) // to hit d20 + attacker focus vs oponent dodge, Mage target är andra spelaren 
          {
            int attack = Gen.Next(20) + m_focus.value + m_focus.modifier;
-           if(attack >= target.m_dodge.value+target.m_dodge.modifier)
+           if(attack >= target.m_dodge.value+target.m_dodge.modifier)//on hit: d5+ d5+ damage vs oponent defense
            {
                int damageAmount = Gen.Next(5) + Gen.Next(5) + m_damage.value+m_damage.modifier-(target.m_defense.value+target.m_defense.modifier);
               target.hp.modifier-=damageAmount;
@@ -70,9 +71,12 @@ namespace MageBattle
          public bool StatusUpdate()
          {
              bool isAlive = true;
-             if(hp.value<=hp.modifier)
+             if(hp.value - hp.modifier <= 0) // value grund hp
              {
+                 int lifeLeft= hp.value - hp.modifier;
+
                  isAlive=false;
+                 Console.WriteLine(name+" has"+ lifeLeft+" hp left");
 
              }
              return isAlive;
